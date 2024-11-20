@@ -45,8 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import mil.nga.geopackage.GeoPackageFactory;
 import mil.nga.geopackage.GeoPackageManager;
-import mil.nga.geopackage.factory.GeoPackageFactory;
 
 /**
  * lets you pick one or more offline tile archives/providers
@@ -213,7 +213,7 @@ public class OfflinePickerSample extends BaseSampleFragment implements View.OnCl
             //fire up the forge maps...
             XmlRenderTheme theme = null;
             try {
-                theme = new AssetsRenderTheme(getContext().getApplicationContext(), "renderthemes/", "rendertheme-v4.xml");
+                theme = new AssetsRenderTheme(getContext().getApplicationContext().getAssets(), "renderthemes/", "rendertheme-v4.xml");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

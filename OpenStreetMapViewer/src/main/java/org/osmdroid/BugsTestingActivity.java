@@ -1,10 +1,6 @@
 package org.osmdroid;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
 import org.osmdroid.bugtestfragments.BugFactory;
@@ -16,6 +12,11 @@ import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * Created by alex on 6/29/16.
@@ -41,6 +42,7 @@ public class BugsTestingActivity extends AppCompatActivity {
         if (fm.findFragmentByTag(SAMPLES_FRAGMENT_TAG) == null) {
             List<IBaseActivity> extras = new ArrayList<>();
             extras.add(new WeathForceActivity());
+            extras.add(new Bug1783Activity());
             fragmentSamples = SamplesMenuFragment.newInstance(BugFactory.getInstance(), extras);
             fm.beginTransaction().add(org.osmdroid.R.id.samples_container, fragmentSamples, SAMPLES_FRAGMENT_TAG).commit();
         }

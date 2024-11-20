@@ -2,11 +2,12 @@ package org.osmdroid.sample;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.simplemap.R;
 import org.osmdroid.views.MapView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Bare bones osmdroid example
@@ -15,7 +16,7 @@ import org.osmdroid.views.MapView;
  * @author Alex O'Ree
  */
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends  android.app.Activity {
     private MapView mapView = null;
 
     @Override

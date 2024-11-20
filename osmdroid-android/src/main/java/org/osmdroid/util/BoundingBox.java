@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.views.MapView;
 
 import java.io.Serializable;
@@ -66,22 +67,50 @@ public class BoundingBox implements Parcelable, Serializable {
         mLatSouth = south;
         mLonWest = west;
         //validate the values
-        //  30 > 0 OK
-        // 30 < 0 not ok
+        if (Configuration.getInstance().isEnforceTileSystemBounds()) {
 
-        final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
-        if (!tileSystem.isValidLatitude(north))
-            throw new IllegalArgumentException("north must be in " + tileSystem.toStringLatitudeSpan());
-        if (!tileSystem.isValidLatitude(south))
-            throw new IllegalArgumentException("south must be in " + tileSystem.toStringLatitudeSpan());
-        if (!tileSystem.isValidLongitude(west))
-            throw new IllegalArgumentException("west must be in " + tileSystem.toStringLongitudeSpan());
-        if (!tileSystem.isValidLongitude(east))
-            throw new IllegalArgumentException("east must be in " + tileSystem.toStringLongitudeSpan());
+            final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+            if (!tileSystem.isValidLatitude(north))
+                throw new IllegalArgumentException("north must be in " + tileSystem.toStringLatitudeSpan());
+            if (!tileSystem.isValidLatitude(south))
+                throw new IllegalArgumentException("south must be in " + tileSystem.toStringLatitudeSpan());
+            if (!tileSystem.isValidLongitude(west))
+                throw new IllegalArgumentException("west must be in " + tileSystem.toStringLongitudeSpan());
+            if (!tileSystem.isValidLongitude(east))
+                throw new IllegalArgumentException("east must be in " + tileSystem.toStringLongitudeSpan());
+        }
     }
 
     public BoundingBox clone() {
         return new BoundingBox(this.mLatNorth, this.mLonEast, this.mLatSouth, this.mLonWest);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BoundingBox that = (BoundingBox) o;
+
+        if (Double.compare(mLatNorth, that.mLatNorth) != 0) return false;
+        if (Double.compare(mLatSouth, that.mLatSouth) != 0) return false;
+        if (Double.compare(mLonEast, that.mLonEast) != 0) return false;
+        return Double.compare(mLonWest, that.mLonWest) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(mLatNorth);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mLatSouth);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mLonEast);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(mLonWest);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     /**

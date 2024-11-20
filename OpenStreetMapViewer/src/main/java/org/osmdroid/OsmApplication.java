@@ -3,8 +3,6 @@ package org.osmdroid;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import org.acra.ACRA;
@@ -19,6 +17,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+
 /**
  * This is the base application for the sample app. We only use to catch errors during development cycles
  * <p>
@@ -32,7 +33,7 @@ public class OsmApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
@@ -45,7 +46,7 @@ public class OsmApplication extends MultiDexApplication {
                     .penaltyLog()
                     .penaltyDeath()
                     .build());
-        }
+        }*/
 
         Thread.currentThread().setUncaughtExceptionHandler(new OsmUncaughtExceptionHandler());
 

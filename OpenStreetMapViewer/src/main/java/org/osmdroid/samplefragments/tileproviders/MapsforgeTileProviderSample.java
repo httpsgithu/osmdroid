@@ -108,7 +108,7 @@ public class MapsforgeTileProviderSample extends BaseSampleFragment {
             //null is ok here, uses the default rendering theme if it's not set
             XmlRenderTheme theme = null;
             try {
-                theme = new AssetsRenderTheme(getContext().getApplicationContext(), "renderthemes/", "rendertheme-v4.xml");
+                theme = new AssetsRenderTheme(getContext().getApplicationContext().getAssets(), "renderthemes/", "rendertheme-v4.xml");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -118,6 +118,8 @@ public class MapsforgeTileProviderSample extends BaseSampleFragment {
                     new SimpleRegisterReceiver(getContext()),
                     fromFiles, null);
 
+            // with value of .5F the map tiles more closely resemble that of native MapsForge basic map
+            // fromFiles.setUserScaleFactor(.5F);
 
             mMapView.setTileProvider(forge);
 

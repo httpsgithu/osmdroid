@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.InputDevice;
 import android.view.LayoutInflater;
@@ -27,9 +26,12 @@ import org.osmdroid.views.overlay.MinimapOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
+import org.osmdroid.views.overlay.gestures.OneFingerZoomOverlay;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Default map view activity.
@@ -63,6 +65,7 @@ public class StarterMapFragment extends Fragment {
     private ScaleBarOverlay mScaleBarOverlay;
     private RotationGestureOverlay mRotationGestureOverlay;
     private CopyrightOverlay mCopyrightOverlay;
+    private OneFingerZoomOverlay mOneFingerZoomOverlay;
 
     public static StarterMapFragment newInstance() {
         return new StarterMapFragment();
@@ -162,6 +165,9 @@ public class StarterMapFragment extends Fragment {
         mRotationGestureOverlay.setEnabled(true);
         mMapView.getOverlays().add(this.mRotationGestureOverlay);
 
+        //support for one finger zoom
+        mOneFingerZoomOverlay = new OneFingerZoomOverlay();
+        mMapView.getOverlays().add(this.mOneFingerZoomOverlay);
 
         //needed for pinch zooms
         mMapView.setMultiTouchControls(true);
